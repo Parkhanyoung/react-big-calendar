@@ -5416,16 +5416,27 @@
   function sortEvents$1(_ref) {
     var _ref$evtA = _ref.evtA,
       aStart = _ref$evtA.start,
-      aEnd = _ref$evtA.end
-    _ref$evtA.allDay
-    var _ref$evtB = _ref.evtB,
+      aEnd = _ref$evtA.end,
+      aAllDay = _ref$evtA.allDay,
+      aRowIndex = _ref$evtA.rowIndex,
+      _ref$evtB = _ref.evtB,
       bStart = _ref$evtB.start,
-      bEnd = _ref$evtB.end
-    _ref$evtB.allDay
-    ;+startOf(bStart, 'day') - +startOf(aStart, 'day')
-    diff(aStart, ceil(aEnd, 'day'), 'day')
-    diff(bStart, ceil(bEnd, 'day'), 'day')
-    return 3 // then sort by end time
+      bEnd = _ref$evtB.end,
+      bAllDay = _ref$evtB.allDay,
+      bRowIndex = _ref$evtB.rowIndex
+    console.error(aRowIndex)
+    var startSort1 = bRowIndex - aRowIndex
+    var startSort2 = +startOf(bStart, 'day') - +startOf(aStart, 'day')
+    var durA = diff(aStart, ceil(aEnd, 'day'), 'day')
+    var durB = diff(bStart, ceil(bEnd, 'day'), 'day')
+    return (
+      startSort1 ||
+      startSort2 || // sort by start Day first
+      Math.max(durB, 1) - Math.max(durA, 1) || // events spanning multiple days go first
+      !!bAllDay - !!aAllDay || // then allDay single day events
+      +aStart - +bStart || // then sort by start time
+      +aEnd - +bEnd // then sort by end time
+    )
   }
 
   function inEventRange(_ref2) {
@@ -48312,11 +48323,13 @@
       start: accessors.start(eventA),
       end: accessors.end(eventA),
       allDay: accessors.allDay(eventA),
+      rowIndex: eventA.rowIndex ? eventA.rowIndex : 1,
     }
     var evtB = {
       start: accessors.start(eventB),
       end: accessors.end(eventB),
       allDay: accessors.allDay(eventB),
+      rowIndex: eventB.rowIndex ? eventB.rowIndex : 1,
     }
     return localizer.sortEvents({
       evtA: evtA,
@@ -50783,6 +50796,16 @@
 
     return TimeSlotGroup
   })(react.exports.Component)
+  TimeSlotGroup.propTypes =
+    'development' !== 'production'
+      ? {
+          renderSlot: propTypes$3.exports.func,
+          group: propTypes$3.exports.array.isRequired,
+          resource: propTypes$3.exports.any,
+          components: propTypes$3.exports.object,
+          getters: propTypes$3.exports.object,
+        }
+      : {}
 
   function stringifyPercent(v) {
     return typeof v === 'string' ? v : v + '%'
@@ -51656,6 +51679,15 @@
     var label = _ref.label
     return /*#__PURE__*/ React.createElement(React.Fragment, null, label)
   }
+
+  ResourceHeader.propTypes =
+    'development' !== 'production'
+      ? {
+          label: propTypes$3.exports.node,
+          index: propTypes$3.exports.number,
+          resource: propTypes$3.exports.object,
+        }
+      : {}
 
   var TimeGridHeader = /*#__PURE__*/ (function (_React$Component) {
     _inherits(TimeGridHeader, _React$Component)

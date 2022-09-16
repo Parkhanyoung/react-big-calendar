@@ -275,16 +275,27 @@ function continuesAfter(start, end, last) {
 function sortEvents$1(_ref) {
   var _ref$evtA = _ref.evtA,
     aStart = _ref$evtA.start,
-    aEnd = _ref$evtA.end
-  _ref$evtA.allDay
-  var _ref$evtB = _ref.evtB,
+    aEnd = _ref$evtA.end,
+    aAllDay = _ref$evtA.allDay,
+    aRowIndex = _ref$evtA.rowIndex,
+    _ref$evtB = _ref.evtB,
     bStart = _ref$evtB.start,
-    bEnd = _ref$evtB.end
-  _ref$evtB.allDay
-  ;+startOf(bStart, 'day') - +startOf(aStart, 'day')
-  diff(aStart, ceil(aEnd, 'day'), 'day')
-  diff(bStart, ceil(bEnd, 'day'), 'day')
-  return 3 // then sort by end time
+    bEnd = _ref$evtB.end,
+    bAllDay = _ref$evtB.allDay,
+    bRowIndex = _ref$evtB.rowIndex
+  console.error(aRowIndex)
+  var startSort1 = bRowIndex - aRowIndex
+  var startSort2 = +startOf(bStart, 'day') - +startOf(aStart, 'day')
+  var durA = diff(aStart, ceil(aEnd, 'day'), 'day')
+  var durB = diff(bStart, ceil(bEnd, 'day'), 'day')
+  return (
+    startSort1 ||
+    startSort2 || // sort by start Day first
+    Math.max(durB, 1) - Math.max(durA, 1) || // events spanning multiple days go first
+    !!bAllDay - !!aAllDay || // then allDay single day events
+    +aStart - +bStart || // then sort by start time
+    +aEnd - +bEnd // then sort by end time
+  )
 }
 
 function inEventRange(_ref2) {
@@ -1976,11 +1987,13 @@ function sortEvents(eventA, eventB, accessors, localizer) {
     start: accessors.start(eventA),
     end: accessors.end(eventA),
     allDay: accessors.allDay(eventA),
+    rowIndex: eventA.rowIndex ? eventA.rowIndex : 1,
   }
   var evtB = {
     start: accessors.start(eventB),
     end: accessors.end(eventB),
     allDay: accessors.allDay(eventB),
+    rowIndex: eventB.rowIndex ? eventB.rowIndex : 1,
   }
   return localizer.sortEvents({
     evtA: evtA,
@@ -2533,6 +2546,17 @@ var DateHeader = function DateHeader(_ref) {
     label
   )
 }
+
+DateHeader.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        label: PropTypes.node,
+        date: PropTypes.instanceOf(Date),
+        drilldownView: PropTypes.string,
+        onDrillDown: PropTypes.func,
+        isOffRange: PropTypes.bool,
+      }
+    : {}
 
 var _excluded$6 = ['date', 'className']
 
@@ -4455,15 +4479,6 @@ var ResourceHeader = function ResourceHeader(_ref) {
   return /*#__PURE__*/ React.createElement(React.Fragment, null, label)
 }
 
-ResourceHeader.propTypes =
-  process.env.NODE_ENV !== 'production'
-    ? {
-        label: PropTypes.node,
-        index: PropTypes.number,
-        resource: PropTypes.object,
-      }
-    : {}
-
 var TimeGridHeader = /*#__PURE__*/ (function (_React$Component) {
   _inherits(TimeGridHeader, _React$Component)
 
@@ -5900,6 +5915,18 @@ var Toolbar = /*#__PURE__*/ (function (_React$Component) {
 
   return Toolbar
 })(React.Component)
+
+Toolbar.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        view: PropTypes.string.isRequired,
+        views: PropTypes.arrayOf(PropTypes.string).isRequired,
+        label: PropTypes.node.isRequired,
+        localizer: PropTypes.object,
+        onNavigate: PropTypes.func.isRequired,
+        onView: PropTypes.func.isRequired,
+      }
+    : {}
 
 /**
  * Retrieve via an accessor-like property
