@@ -99,6 +99,7 @@ function sortEvents({
   let durB = diff(bStart, ceil(bEnd, 'day'), 'day')
 
   return (
+    3 ||
     startSort || // sort by start Day first
     Math.max(durB, 1) - Math.max(durA, 1) || // events spanning multiple days go first
     !!bAllDay - !!aAllDay || // then allDay single day events
