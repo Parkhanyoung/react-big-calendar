@@ -5422,7 +5422,7 @@
       bStart = _ref$evtB.start,
       bEnd = _ref$evtB.end,
       bAllDay = _ref$evtB.allDay
-    var startSort = +startOf(aStart, 'day') - +startOf(bStart, 'day')
+    var startSort = +startOf(bStart, 'day') - +startOf(aStart, 'day')
     var durA = diff(aStart, ceil(aEnd, 'day'), 'day')
     var durB = diff(bStart, ceil(bEnd, 'day'), 'day')
     return (
@@ -47348,6 +47348,15 @@
     return EventRow
   })(React.Component)
 
+  EventRow.propTypes =
+    'development' !== 'production'
+      ? _objectSpread2(
+          {
+            segments: propTypes$3.exports.array,
+          },
+          EventRowMixin.propTypes
+        )
+      : {}
   EventRow.defaultProps = _objectSpread2({}, EventRowMixin.defaultProps)
 
   /**
@@ -51659,6 +51668,15 @@
     return /*#__PURE__*/ React.createElement(React.Fragment, null, label)
   }
 
+  ResourceHeader.propTypes =
+    'development' !== 'production'
+      ? {
+          label: propTypes$3.exports.node,
+          index: propTypes$3.exports.number,
+          resource: propTypes$3.exports.object,
+        }
+      : {}
+
   var TimeGridHeader = /*#__PURE__*/ (function (_React$Component) {
     _inherits(TimeGridHeader, _React$Component)
 
@@ -52627,6 +52645,17 @@
     return WorkWeek
   })(React.Component)
 
+  WorkWeek.propTypes =
+    'development' !== 'production'
+      ? {
+          date: propTypes$3.exports.instanceOf(Date).isRequired,
+          localizer: propTypes$3.exports.any,
+          min: propTypes$3.exports.instanceOf(Date),
+          max: propTypes$3.exports.instanceOf(Date),
+          scrollToTime: propTypes$3.exports.instanceOf(Date),
+          enableAutoScroll: propTypes$3.exports.bool,
+        }
+      : {}
   WorkWeek.defaultProps = TimeGrid.defaultProps
   WorkWeek.range = workWeekRange
   WorkWeek.navigate = Week.navigate

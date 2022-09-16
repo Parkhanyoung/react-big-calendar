@@ -92,7 +92,7 @@ function sortEvents({
   evtA: { start: aStart, end: aEnd, allDay: aAllDay },
   evtB: { start: bStart, end: bEnd, allDay: bAllDay },
 }) {
-  let startSort = +startOf(aStart, 'day') - +startOf(bStart, 'day')
+  let startSort = +startOf(bStart, 'day') - +startOf(aStart, 'day')
 
   let durA = diff(aStart, ceil(aEnd, 'day'), 'day')
 
@@ -173,7 +173,7 @@ export class DateLocalizer {
 
     this.getSlotDate = spec.getSlotDate || getSlotDate
     this.getTimezoneOffset =
-      spec.getTimezoneOffset || (value => value.getTimezoneOffset())
+      spec.getTimezoneOffset || ((value) => value.getTimezoneOffset())
     this.getDstOffset = spec.getDstOffset || getDstOffset
     this.getTotalMin = spec.getTotalMin || getTotalMin
     this.getMinutesFromMidnight =

@@ -281,7 +281,7 @@ function sortEvents$1(_ref) {
     bStart = _ref$evtB.start,
     bEnd = _ref$evtB.end,
     bAllDay = _ref$evtB.allDay
-  var startSort = +startOf(aStart, 'day') - +startOf(bStart, 'day')
+  var startSort = +startOf(bStart, 'day') - +startOf(aStart, 'day')
   var durA = diff(aStart, ceil(aEnd, 'day'), 'day')
   var durB = diff(bStart, ceil(bEnd, 'day'), 'day')
   return (
@@ -3600,16 +3600,6 @@ var TimeSlotGroup = /*#__PURE__*/ (function (_Component) {
 
   return TimeSlotGroup
 })(Component)
-TimeSlotGroup.propTypes =
-  process.env.NODE_ENV !== 'production'
-    ? {
-        renderSlot: PropTypes.func,
-        group: PropTypes.array.isRequired,
-        resource: PropTypes.any,
-        components: PropTypes.object,
-        getters: PropTypes.object,
-      }
-    : {}
 
 function stringifyPercent(v) {
   return typeof v === 'string' ? v : v + '%'
@@ -5297,17 +5287,6 @@ var Week = /*#__PURE__*/ (function (_React$Component) {
   return Week
 })(React.Component)
 
-Week.propTypes =
-  process.env.NODE_ENV !== 'production'
-    ? {
-        date: PropTypes.instanceOf(Date).isRequired,
-        localizer: PropTypes.any,
-        min: PropTypes.instanceOf(Date),
-        max: PropTypes.instanceOf(Date),
-        scrollToTime: PropTypes.instanceOf(Date),
-        enableAutoScroll: PropTypes.bool,
-      }
-    : {}
 Week.defaultProps = TimeGrid.defaultProps
 
 Week.navigate = function (date, action, _ref) {
@@ -5917,6 +5896,18 @@ var Toolbar = /*#__PURE__*/ (function (_React$Component) {
 
   return Toolbar
 })(React.Component)
+
+Toolbar.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        view: PropTypes.string.isRequired,
+        views: PropTypes.arrayOf(PropTypes.string).isRequired,
+        label: PropTypes.node.isRequired,
+        localizer: PropTypes.object,
+        onNavigate: PropTypes.func.isRequired,
+        onView: PropTypes.func.isRequired,
+      }
+    : {}
 
 /**
  * Retrieve via an accessor-like property
