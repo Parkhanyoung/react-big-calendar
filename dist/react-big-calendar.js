@@ -5416,22 +5416,16 @@
   function sortEvents$1(_ref) {
     var _ref$evtA = _ref.evtA,
       aStart = _ref$evtA.start,
-      aEnd = _ref$evtA.end,
-      aAllDay = _ref$evtA.allDay,
-      _ref$evtB = _ref.evtB,
+      aEnd = _ref$evtA.end
+    _ref$evtA.allDay
+    var _ref$evtB = _ref.evtB,
       bStart = _ref$evtB.start,
-      bEnd = _ref$evtB.end,
-      bAllDay = _ref$evtB.allDay
-    var startSort = +startOf(bStart, 'day') - +startOf(aStart, 'day')
-    var durA = diff(aStart, ceil(aEnd, 'day'), 'day')
-    var durB = diff(bStart, ceil(bEnd, 'day'), 'day')
-    return (
-      startSort || // sort by start Day first
-      Math.max(durB, 1) - Math.max(durA, 1) || // events spanning multiple days go first
-      !!bAllDay - !!aAllDay || // then allDay single day events
-      +aStart - +bStart || // then sort by start time
-      +aEnd - +bEnd // then sort by end time
-    )
+      bEnd = _ref$evtB.end
+    _ref$evtB.allDay
+    ;+startOf(bStart, 'day') - +startOf(aStart, 'day')
+    diff(aStart, ceil(aEnd, 'day'), 'day')
+    diff(bStart, ceil(bEnd, 'day'), 'day')
+    return 3 // then sort by end time
   }
 
   function inEventRange(_ref2) {
@@ -47348,15 +47342,6 @@
     return EventRow
   })(React.Component)
 
-  EventRow.propTypes =
-    'development' !== 'production'
-      ? _objectSpread2(
-          {
-            segments: propTypes$3.exports.array,
-          },
-          EventRowMixin.propTypes
-        )
-      : {}
   EventRow.defaultProps = _objectSpread2({}, EventRowMixin.defaultProps)
 
   /**
@@ -49026,13 +49011,6 @@
     )
   }
 
-  Header.propTypes =
-    'development' !== 'production'
-      ? {
-          label: propTypes$3.exports.node,
-        }
-      : {}
-
   var DateHeader = function DateHeader(_ref) {
     var label = _ref.label,
       drilldownView = _ref.drilldownView,
@@ -49053,6 +49031,17 @@
       label
     )
   }
+
+  DateHeader.propTypes =
+    'development' !== 'production'
+      ? {
+          label: propTypes$3.exports.node,
+          date: propTypes$3.exports.instanceOf(Date),
+          drilldownView: propTypes$3.exports.string,
+          onDrillDown: propTypes$3.exports.func,
+          isOffRange: propTypes$3.exports.bool,
+        }
+      : {}
 
   var _excluded$6 = ['date', 'className']
 
@@ -51668,15 +51657,6 @@
     return /*#__PURE__*/ React.createElement(React.Fragment, null, label)
   }
 
-  ResourceHeader.propTypes =
-    'development' !== 'production'
-      ? {
-          label: propTypes$3.exports.node,
-          index: propTypes$3.exports.number,
-          resource: propTypes$3.exports.object,
-        }
-      : {}
-
   var TimeGridHeader = /*#__PURE__*/ (function (_React$Component) {
     _inherits(TimeGridHeader, _React$Component)
 
@@ -52645,17 +52625,6 @@
     return WorkWeek
   })(React.Component)
 
-  WorkWeek.propTypes =
-    'development' !== 'production'
-      ? {
-          date: propTypes$3.exports.instanceOf(Date).isRequired,
-          localizer: propTypes$3.exports.any,
-          min: propTypes$3.exports.instanceOf(Date),
-          max: propTypes$3.exports.instanceOf(Date),
-          scrollToTime: propTypes$3.exports.instanceOf(Date),
-          enableAutoScroll: propTypes$3.exports.bool,
-        }
-      : {}
   WorkWeek.defaultProps = TimeGrid.defaultProps
   WorkWeek.range = workWeekRange
   WorkWeek.navigate = Week.navigate
