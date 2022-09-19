@@ -2534,6 +2534,13 @@ var Header = function Header(_ref) {
   )
 }
 
+Header.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        label: PropTypes.node,
+      }
+    : {}
+
 var DateHeader = function DateHeader(_ref) {
   var label = _ref.label,
     drilldownView = _ref.drilldownView,
@@ -2554,6 +2561,17 @@ var DateHeader = function DateHeader(_ref) {
     label
   )
 }
+
+DateHeader.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        label: PropTypes.node,
+        date: PropTypes.instanceOf(Date),
+        drilldownView: PropTypes.string,
+        onDrillDown: PropTypes.func,
+        isOffRange: PropTypes.bool,
+      }
+    : {}
 
 var _excluded$6 = ['date', 'className']
 
@@ -5902,6 +5920,18 @@ var Toolbar = /*#__PURE__*/ (function (_React$Component) {
 
   return Toolbar
 })(React.Component)
+
+Toolbar.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        view: PropTypes.string.isRequired,
+        views: PropTypes.arrayOf(PropTypes.string).isRequired,
+        label: PropTypes.node.isRequired,
+        localizer: PropTypes.object,
+        onNavigate: PropTypes.func.isRequired,
+        onView: PropTypes.func.isRequired,
+      }
+    : {}
 
 /**
  * Retrieve via an accessor-like property

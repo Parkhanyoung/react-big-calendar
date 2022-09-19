@@ -47352,15 +47352,6 @@
     return EventRow
   })(React.Component)
 
-  EventRow.propTypes =
-    'development' !== 'production'
-      ? _objectSpread2(
-          {
-            segments: propTypes$3.exports.array,
-          },
-          EventRowMixin.propTypes
-        )
-      : {}
   EventRow.defaultProps = _objectSpread2({}, EventRowMixin.defaultProps)
 
   /**
@@ -49038,13 +49029,6 @@
       label
     )
   }
-
-  Header.propTypes =
-    'development' !== 'production'
-      ? {
-          label: propTypes$3.exports.node,
-        }
-      : {}
 
   var DateHeader = function DateHeader(_ref) {
     var label = _ref.label,
@@ -51680,6 +51664,15 @@
     var label = _ref.label
     return /*#__PURE__*/ React.createElement(React.Fragment, null, label)
   }
+
+  ResourceHeader.propTypes =
+    'development' !== 'production'
+      ? {
+          label: propTypes$3.exports.node,
+          index: propTypes$3.exports.number,
+          resource: propTypes$3.exports.object,
+        }
+      : {}
 
   var TimeGridHeader = /*#__PURE__*/ (function (_React$Component) {
     _inherits(TimeGridHeader, _React$Component)
