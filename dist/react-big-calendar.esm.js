@@ -1885,15 +1885,6 @@ var EventRow = /*#__PURE__*/ (function (_React$Component) {
   return EventRow
 })(React.Component)
 
-EventRow.propTypes =
-  process.env.NODE_ENV !== 'production'
-    ? _objectSpread(
-        {
-          segments: PropTypes.array,
-        },
-        EventRowMixin.propTypes
-      )
-    : {}
 EventRow.defaultProps = _objectSpread({}, EventRowMixin.defaultProps)
 
 function endOfRange(_ref) {
@@ -2180,11 +2171,14 @@ function getSlotMetrics$1() {
       last = _endOfRange.last
 
     events.sort(function (a, b) {
-      if (!a.rowIndex || !b.rowIndex) {
+      var aRowIndex = a.rowIndex + 1
+      var bRowIndex = b.rowIndex + 1
+
+      if (!aRowIndex || !bRowIndex) {
         return 0
       }
 
-      return a.rowIndex - b.rowIndex
+      return aRowIndex - bRowIndex
     })
     var segments = events.map(function (evt) {
       return eventSegments(evt, range, accessors, localizer)
@@ -2533,13 +2527,6 @@ var Header = function Header(_ref) {
     label
   )
 }
-
-Header.propTypes =
-  process.env.NODE_ENV !== 'production'
-    ? {
-        label: PropTypes.node,
-      }
-    : {}
 
 var DateHeader = function DateHeader(_ref) {
   var label = _ref.label,
@@ -3633,6 +3620,16 @@ var TimeSlotGroup = /*#__PURE__*/ (function (_Component) {
 
   return TimeSlotGroup
 })(Component)
+TimeSlotGroup.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        renderSlot: PropTypes.func,
+        group: PropTypes.array.isRequired,
+        resource: PropTypes.any,
+        components: PropTypes.object,
+        getters: PropTypes.object,
+      }
+    : {}
 
 function stringifyPercent(v) {
   return typeof v === 'string' ? v : v + '%'
@@ -4484,6 +4481,15 @@ var ResourceHeader = function ResourceHeader(_ref) {
   return /*#__PURE__*/ React.createElement(React.Fragment, null, label)
 }
 
+ResourceHeader.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        label: PropTypes.node,
+        index: PropTypes.number,
+        resource: PropTypes.object,
+      }
+    : {}
+
 var TimeGridHeader = /*#__PURE__*/ (function (_React$Component) {
   _inherits(TimeGridHeader, _React$Component)
 
@@ -5214,6 +5220,18 @@ var Day = /*#__PURE__*/ (function (_React$Component) {
   return Day
 })(React.Component)
 
+Day.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        date: PropTypes.instanceOf(Date).isRequired,
+        localizer: PropTypes.any,
+        min: PropTypes.instanceOf(Date),
+        max: PropTypes.instanceOf(Date),
+        scrollToTime: PropTypes.instanceOf(Date),
+        enableAutoScroll: PropTypes.bool,
+      }
+    : {}
+
 Day.range = function (date, _ref) {
   var localizer = _ref.localizer
   return [localizer.startOf(date, 'day')]
@@ -5311,6 +5329,17 @@ var Week = /*#__PURE__*/ (function (_React$Component) {
   return Week
 })(React.Component)
 
+Week.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        date: PropTypes.instanceOf(Date).isRequired,
+        localizer: PropTypes.any,
+        min: PropTypes.instanceOf(Date),
+        max: PropTypes.instanceOf(Date),
+        scrollToTime: PropTypes.instanceOf(Date),
+        enableAutoScroll: PropTypes.bool,
+      }
+    : {}
 Week.defaultProps = TimeGrid.defaultProps
 
 Week.navigate = function (date, action, _ref) {
@@ -5920,18 +5949,6 @@ var Toolbar = /*#__PURE__*/ (function (_React$Component) {
 
   return Toolbar
 })(React.Component)
-
-Toolbar.propTypes =
-  process.env.NODE_ENV !== 'production'
-    ? {
-        view: PropTypes.string.isRequired,
-        views: PropTypes.arrayOf(PropTypes.string).isRequired,
-        label: PropTypes.node.isRequired,
-        localizer: PropTypes.object,
-        onNavigate: PropTypes.func.isRequired,
-        onView: PropTypes.func.isRequired,
-      }
-    : {}
 
 /**
  * Retrieve via an accessor-like property

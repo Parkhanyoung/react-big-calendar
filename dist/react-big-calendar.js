@@ -48676,11 +48676,14 @@
         last = _endOfRange.last
 
       events.sort(function (a, b) {
-        if (!a.rowIndex || !b.rowIndex) {
+        var aRowIndex = a.rowIndex + 1
+        var bRowIndex = b.rowIndex + 1
+
+        if (!aRowIndex || !bRowIndex) {
           return 0
         }
 
-        return a.rowIndex - b.rowIndex
+        return aRowIndex - bRowIndex
       })
       var segments = events.map(function (evt) {
         return eventSegments(evt, range, accessors, localizer)
@@ -51664,15 +51667,6 @@
     var label = _ref.label
     return /*#__PURE__*/ React.createElement(React.Fragment, null, label)
   }
-
-  ResourceHeader.propTypes =
-    'development' !== 'production'
-      ? {
-          label: propTypes$3.exports.node,
-          index: propTypes$3.exports.number,
-          resource: propTypes$3.exports.object,
-        }
-      : {}
 
   var TimeGridHeader = /*#__PURE__*/ (function (_React$Component) {
     _inherits(TimeGridHeader, _React$Component)
