@@ -11,6 +11,12 @@ export function getSlotMetrics() {
     const { range, events, maxRows, minRows, accessors, localizer } = options
     let { first, last } = endOfRange({ dateRange: range, localizer })
 
+    events.sort((a, b) => {
+      if (!a.rowIndex || !b.rowIndex) {
+        return 0
+      }
+      return a.rowIndex - b.rowIndex
+    })
     let segments = events.map((evt) =>
       eventSegments(evt, range, accessors, localizer)
     )

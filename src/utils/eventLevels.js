@@ -57,7 +57,6 @@ export function eventLevels(rowSegments, limit = Infinity) {
   for (i = 0; i < levels.length; i++) {
     levels[i].sort((a, b) => a.left - b.left) //eslint-disable-line
   }
-
   return { levels, extra }
 }
 

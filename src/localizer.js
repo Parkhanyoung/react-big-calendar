@@ -92,7 +92,6 @@ function sortEvents({
   evtA: { start: aStart, end: aEnd, allDay: aAllDay, rowIndex: aRowIndex },
   evtB: { start: bStart, end: bEnd, allDay: bAllDay, rowIndex: bRowIndex },
 }) {
-  console.error(aRowIndex)
   let startSort1 = bRowIndex - aRowIndex
   let startSort2 = +startOf(bStart, 'day') - +startOf(aStart, 'day')
 

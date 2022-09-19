@@ -283,7 +283,6 @@ function sortEvents$1(_ref) {
     bEnd = _ref$evtB.end,
     bAllDay = _ref$evtB.allDay,
     bRowIndex = _ref$evtB.rowIndex
-  console.error(aRowIndex)
   var startSort1 = bRowIndex - aRowIndex
   var startSort2 = +startOf(bStart, 'day') - +startOf(aStart, 'day')
   var durA = diff(aStart, ceil(aEnd, 'day'), 'day')
@@ -3618,16 +3617,6 @@ var TimeSlotGroup = /*#__PURE__*/ (function (_Component) {
 
   return TimeSlotGroup
 })(Component)
-TimeSlotGroup.propTypes =
-  process.env.NODE_ENV !== 'production'
-    ? {
-        renderSlot: PropTypes.func,
-        group: PropTypes.array.isRequired,
-        resource: PropTypes.any,
-        components: PropTypes.object,
-        getters: PropTypes.object,
-      }
-    : {}
 
 function stringifyPercent(v) {
   return typeof v === 'string' ? v : v + '%'
@@ -4478,6 +4467,15 @@ var ResourceHeader = function ResourceHeader(_ref) {
   var label = _ref.label
   return /*#__PURE__*/ React.createElement(React.Fragment, null, label)
 }
+
+ResourceHeader.propTypes =
+  process.env.NODE_ENV !== 'production'
+    ? {
+        label: PropTypes.node,
+        index: PropTypes.number,
+        resource: PropTypes.object,
+      }
+    : {}
 
 var TimeGridHeader = /*#__PURE__*/ (function (_React$Component) {
   _inherits(TimeGridHeader, _React$Component)
